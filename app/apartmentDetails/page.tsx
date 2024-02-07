@@ -8,25 +8,27 @@ import Responsive from '@/components/Slider';
 
 export default function ApartmentDetailsPage() {
     const [apartment, setApartment] = useState<Apartment>();
-    const location = window.location;
+    const location = typeof window !== 'undefined' ? window.location : null;
     useEffect(() => {
         const fetchApartmentDetails = async () => {
             try {
-                // Get refNo from the route params
-                const urlSearchString = location.search;
-                const params = new URLSearchParams(urlSearchString);
-                const  refNo  = params.get('refNo');
-
-                if (refNo) {
+                // Check if window is defined (only execute on the client-side)
+                if (location) {
+                  const urlSearchString = location.search;
+                  const params = new URLSearchParams(urlSearchString);
+                  const refNo = params.get('refNo');
+        
+                  if (refNo) {
                     // Fetch apartment details by refNo
                     const apartmentDetails = await getApartmentByRefNo(refNo);
                     setApartment(apartmentDetails);
-                } else {
+                  } else {
                     console.error('RefNo not found in route params.');
+                  }
                 }
-            } catch (error) {
+              } catch (error) {
                 console.error('Error fetching apartment details:', error);
-            }
+              }
         };
 
         fetchApartmentDetails();
