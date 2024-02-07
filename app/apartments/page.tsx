@@ -5,34 +5,44 @@ import { Apartment } from '@/types/apartmentType';
 import apartmentImage from '../../public/apartment.png'
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/Pagination';
+import ModalView from '@/components/ModalView';
+import AddApartmentForm from '@/components/AddApartmentForm';
 
 export default function ApartmentsPage() {
     const [apartments, setApartments] = useState<Apartment[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
-
+    const [showModal , setShowModal] = useState<boolean>(false)
     const router = useRouter();
-    useEffect(() => {
-        const fetchApartments = async () => {
-            try {
-                const data = await getAllApartments(currentPage);
-                setApartments(data.data);
-                setTotalPages(data.totalPages);
-            } catch (error) {
-                console.error('Error fetching apartments:', error);
-            }
-        };
+    const fetchApartments = async () => {
+        try {
+            const data = await getAllApartments(currentPage);
+            setApartments(data.data)
+            setTotalPages(data.totalPages);
+        } catch (error) {
+            console.error('Error fetching apartments:', error);
+        }
+    };
 
+    useEffect(() => {
         fetchApartments();
     }, [currentPage]);
+
     const handlePageChange = (page : number) => {
         setCurrentPage(page);
     };
+    const handleModalClose = () => {
+        setShowModal(false)
+    }
     return (
         <div className='flex flex-col h-full  gap-6 m-8'>
-            <div>
+            <div className='flex justify-between'>
                 <p className=' text-lg font-semibold text-blue-900'>Explore Properties In Il Bosco New Capital</p>
+                <button onClick={()=>setShowModal(true)} className='text-white rounded-xl bg-blue-800 p-2 '>Add Apartment</button>
             </div>
+            <ModalView showModal={showModal} onClose={handleModalClose}>
+                <AddApartmentForm/>
+            </ModalView>
             <div className='w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 p-2'>
                 {apartments ? (
                     apartments.map((apartment) => (

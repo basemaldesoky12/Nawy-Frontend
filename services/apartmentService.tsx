@@ -1,3 +1,5 @@
+import { Apartment } from "@/types/apartmentType";
+
 const API_BASE_URL = 'http://localhost:8080/api';
 
 export const getAllApartments = async (page : number) => {
@@ -20,4 +22,21 @@ export const getApartmentByRefNo = async (refNo: string | string[]) => {
       throw new Error('Error fetching apartment by refNo');
     }
   };
+
+export const addApartment = async(apartment : Apartment) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/addapartment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(apartment),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error adding apartment:', error);
+    throw new Error('Error adding apartment');
+  }
+}
   

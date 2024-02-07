@@ -5,7 +5,7 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
-const Pagination = ({ totalPages, currentPage, onPageChange } : PaginationProps) => {
+export default function Pagination ({ totalPages, currentPage, onPageChange } : PaginationProps) {
     const handleClick = (page : number) => {
         onPageChange(page);
     };
@@ -26,5 +26,3 @@ const Pagination = ({ totalPages, currentPage, onPageChange } : PaginationProps)
         </div>
     );
 };
-
-export default Pagination;
