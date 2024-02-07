@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { getApartmentByRefNo } from '../../services/apartmentService';
-import { useRouter } from 'next/router';
 import { Apartment } from '@/types/apartmentType';
 import imgOne from '../../public/apartment.png'
+import Responsive from '@/components/Slider';
 
 
 export default function ApartmentDetailsPage() {
@@ -34,19 +34,17 @@ export default function ApartmentDetailsPage() {
 
     return (
         <div className='flex flex-col h-full gap-6 m-6'>
-            <div className='flex justify-center pb-5'>
-                <img src={imgOne.src} alt="" />
+            <div className='ml-10'>
+                <Responsive/>
             </div>
-            <div className='border-b pb-4 ml-8'>
+            <div className='border-b pb-4 ml-2 md:ml-8'>
                 <p className=' text-lg font-semibold text-blue-900'>{apartment?.title}</p>
                 <p className='text-[10px] text-gray-400'>prices start from</p>
                 <p className='text-2xl font-bold'>{apartment?.minPrice} EGP</p>
             </div>
             <div>
-
-
-                <div className="relative overflow-x-auto flex gap-6 ">
-                    <table className="w-1/2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ml-8">
+                <div className="relative overflow-x-auto  md:flex md:gap-6 ">
+                    <table className="w-full md:w-1/2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
@@ -118,8 +116,8 @@ export default function ApartmentDetailsPage() {
 
                         </tbody>
                     </table>
-                    <div className='w-1/2 flex justify-center'>
-                        <div className='w-1/2 h-full'>
+                    <div className='mt-6  w-full md:w-1/2 flex justify-center'>
+                        <div className='md:w-full h-full'>
                             <form className="max-w-sm mx-auto flex-col text-center border p-6 bg-[#E4E9F2]">
                                 <h4 className='text-lg font-semibold text-white-900 mb-4'>Need expert advice?</h4>
                                 <p>Fill out the form and one of our property consultants will contact you.</p>
