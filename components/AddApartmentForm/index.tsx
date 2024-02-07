@@ -52,8 +52,10 @@ export default function AddApartmentForm(props : AddApartmentFormProps) {
                 finishing: '',
                 description: '',
             });
+            onClose()
           } catch (error) {
             console.error('Error adding apartment:', error);
+            onClose()
           }
           }
     return (

@@ -2,7 +2,6 @@ import React from 'react';
 
 export interface ModalViewProps {
   children: React.ReactNode[] | React.ReactNode;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   showModal: boolean;
   onClose : () => void
 }
