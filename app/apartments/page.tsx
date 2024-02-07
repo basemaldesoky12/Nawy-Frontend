@@ -41,7 +41,7 @@ export default function ApartmentsPage() {
                 <button onClick={()=>setShowModal(true)} className='text-white rounded-xl bg-blue-800 p-2 '>Add Apartment</button>
             </div>
             <ModalView showModal={showModal} onClose={handleModalClose}>
-                <AddApartmentForm/>
+                <AddApartmentForm onClose={handleModalClose}/>
             </ModalView>
             <div className='w-full grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 p-2'>
                 {apartments ? (

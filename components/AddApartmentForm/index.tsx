@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { addApartment } from "@/services/apartmentService";
 import { Apartment } from "@/types/apartmentType";
-export default function AddApartmentForm() {
+interface AddApartmentFormProps {
+    onClose : ()=>void
+}
+export default function AddApartmentForm(props : AddApartmentFormProps) {
+    const {onClose} = props
     const initialState = {
         title: '',
         compound:'',
