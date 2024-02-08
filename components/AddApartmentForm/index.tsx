@@ -21,16 +21,28 @@ export default function AddApartmentForm(props : AddApartmentFormProps) {
         description: '',
       };
     const [formData, setFormData] = useState<Apartment>(initialState as Apartment );
+    const [error, setError] = useState<string | null>(null); // State for error message
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
+        let parsedValue : string | number = value;
+
         // Parse input values for fields that should be numbers
-        const parsedValue = name === 'maxPrice' || name === 'minPrice' || name === 'bathrooms' || name === 'bedrooms' ? parseInt(value) : value;
+        if (["minPrice", "maxPrice", "bathrooms", "bedrooms"].includes(name)) {
+            parsedValue = parseInt(value);
+            if (isNaN(parsedValue)) {
+                setError("Field must be a number"); // Set error message
+                return;
+            } else {
+                setError(null); // Clear error message if input is valid
+            }
+        }
+
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: parsedValue,
+            ...prevFormData,
+            [name]: parsedValue,
         }));
-      };
-            
+    };            
     const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
@@ -115,8 +127,9 @@ export default function AddApartmentForm(props : AddApartmentFormProps) {
                     <input onChange={handleChange} name='description'  type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
                 </div>
+                {error && <p className="text-red-500">{error}</p>}
             </div>
-            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+            <button disabled={!!error} type="submit" className=" disabled:cursor-not-allowed disabled:bg-slate-500  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
         </form>
     )
 }
